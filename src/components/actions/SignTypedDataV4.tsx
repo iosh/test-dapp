@@ -1,4 +1,4 @@
-import { useAccount, useSignTypedData } from "wagmi";
+import { useAccount, useSignTypedData, useVerifyTypedData } from "wagmi";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { useCallback, useMemo, useState } from "react";
@@ -47,6 +47,37 @@ const typedData = (chainId: number) => {
       ],
     },
   };
+};
+
+const VerifyTypeData = ({
+  hash,
+  data,
+  address,
+}: {
+  hash: Hex;
+  data: ReturnType<typeof typedData>;
+  address: Hex;
+}) => {
+  const {
+    isError,
+    error,
+    isSuccess,
+    data: isVerified,
+  } = useVerifyTypedData({
+    types: data.types,
+    message: data.message,
+    primaryType: data.primaryType,
+    address: address,
+    signature: hash,
+  });
+  return (
+    <div>
+      {isError && <div>{error.message}</div>}
+      {isSuccess && (
+        <span>Sign typed data is Verify {isVerified ? "success" : "fail"}</span>
+      )}
+    </div>
+  );
 };
 
 const SignTypedDataV4 = () => {
@@ -101,18 +132,7 @@ const SignTypedDataV4 = () => {
         </Button>
 
         {isSuccess && address && hash && data && (
-          <div>
-            <Button onClick={verify} disabled={verifying}>
-              VERIFY TYPED DATA
-            </Button>
-
-            {isVerified !== null && (
-              <div>
-                {isVerified ? "sign is verified" : "sign is  not verified"}:
-                {isVerified}
-              </div>
-            )}
-          </div>
+          <VerifyTypeData address={address} data={data} hash={hash} />
         )}
       </CardContent>
     </Card>
