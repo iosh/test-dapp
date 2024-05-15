@@ -1,35 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { createWeb3Modal } from "@web3modal/wagmi/react";
 
-function App() {
-  const [count, setCount] = useState(0)
+import { http, createConfig, WagmiProvider } from "wagmi";
+import { confluxESpaceTestnet } from "wagmi/chains";
+import { walletConnect } from "wagmi/connectors";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+import ConnectWalletAction from "./components/connect";
+import SendCFX from "./components/actions/sendCFX";
+import { defineChain } from "viem";
+
+const queryClient = new QueryClient();
+
+const projectId = import.meta.env.VITE_PROJECT_ID;
+
+const metadata = {
+  name: "test-dapp",
+  description: "Wallet connect demo",
+  url: "https://vercel.app", // origin must match your domain & subdomain
+  icons: ["https://avatars.githubusercontent.com/u/37784886"],
+};
+
+const config = createConfig({
+  chains: [confluxESpaceTestnet],
+  transports: {
+    [confluxESpaceTestnet.id]: http(import.meta.env.VITE_RPC_TESTNET || ""),
+  },
+  connectors: [walletConnect({ projectId, metadata, showQrModal: false })],
+});
+
+createWeb3Modal({
+  wagmiConfig: config,
+  projectId,
+});
+
+function ContextProvider({ children }: { children: React.ReactNode }) {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <WagmiProvider config={config}>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </WagmiProvider>
+  );
 }
 
-export default App
+export default function App() {
+  return (
+    <ContextProvider>
+      <div className="w-full h-full">
+        <ConnectWalletAction />
+
+        <div>
+          <SendCFX />
+        </div>
+      </div>
+    </ContextProvider>
+  );
+}
