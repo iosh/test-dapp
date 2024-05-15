@@ -8,7 +8,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import ConnectWalletAction from "./components/connect";
 import SendCFX from "./components/actions/sendCFX";
-import { defineChain } from "viem";
+import { Toaster } from "@/components/ui/toaster";
+import PersonalSign from "./components/actions/PersonalSign";
+import SignTypedDataV4 from "./components/actions/SignTypedDataV4";
 
 const queryClient = new QueryClient();
 
@@ -47,10 +49,20 @@ export default function App() {
     <ContextProvider>
       <div className="w-full h-full">
         <ConnectWalletAction />
+        <div className="flex flex-wrap">
+          <div className="w-1/2">
+            <SendCFX />
+          </div>
 
-        <div>
-          <SendCFX />
+          <div className="w-1/2">
+            <PersonalSign />
+          </div>
+
+          <div className="w-1/2">
+            <SignTypedDataV4 />
+          </div>
         </div>
+        <Toaster />
       </div>
     </ContextProvider>
   );
