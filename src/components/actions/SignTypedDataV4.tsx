@@ -1,8 +1,8 @@
-import { useAccount, useClient, useSignTypedData, useVerifyTypedData } from "wagmi";
+import { useAccount, useSignTypedData, useVerifyTypedData } from "wagmi";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { useCallback, useMemo, useState } from "react";
-import { Hex, verifyTypedData } from "viem";
+import { useCallback, useMemo } from "react";
+import { Hex } from "viem";
 
 const typedData = (chainId: number) => {
   return {

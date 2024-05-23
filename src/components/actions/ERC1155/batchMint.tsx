@@ -6,7 +6,7 @@ import { Label } from "@radix-ui/react-label";
 import { useCallback } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Address, encodeFunctionData } from "viem";
-import { useAccount, useSendTransaction, useTransaction } from "wagmi";
+import { useAccount, useSendTransaction } from "wagmi";
 
 type Inputs = {
   ids: string;
@@ -17,16 +17,12 @@ export default function BatchMint({ to }: { to?: Address | null }) {
   const openExplorer = useOpenExplorer();
   const {
     isPending,
-    isSuccess,
+
     data: hash,
-    error,
+
     sendTransaction,
   } = useSendTransaction();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>();
+  const { register, handleSubmit } = useForm<Inputs>();
   const { chainId, address } = useAccount();
 
   const _handleSubmit: SubmitHandler<Inputs> = useCallback(

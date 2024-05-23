@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useCallback } from "react";
 import { Hex, encodeDeployData } from "viem";
-import { useAccount, useSendTransaction, useTransactionReceipt } from "wagmi";
+import { useSendTransaction, useTransactionReceipt } from "wagmi";
 import { erc20ABI, erc20Bytecode } from "../../../constants/contract.json";
 import { Button } from "@/components/ui/button";
 import { useForm, SubmitHandler } from "react-hook-form";

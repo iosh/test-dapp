@@ -6,7 +6,6 @@ import { Label } from "../ui/label";
 import { useForm, SubmitHandler } from "react-hook-form";
 import {
   useAccount,
-  useSendTransaction,
   useSignMessage,
   useVerifyMessage,
 } from "wagmi";
@@ -49,7 +48,6 @@ const PersonalSign = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
     watch,
   } = useForm<Inputs>();
 

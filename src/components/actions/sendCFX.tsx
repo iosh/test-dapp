@@ -1,9 +1,9 @@
-import { useAccount, useSendTransaction, useChains, useChainId } from "wagmi";
+import { useAccount, useSendTransaction, useChainId } from "wagmi";
 
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { useToast } from "@/components/ui/use-toast";
@@ -16,7 +16,6 @@ type Inputs = {
 
 const SendCFX = () => {
   const { address } = useAccount();
-  const chains = useChains();
   const chainId = useChainId();
   const { sendTransaction, data: hash, isPending } = useSendTransaction();
   const { toast } = useToast();
@@ -25,7 +24,6 @@ const SendCFX = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm<Inputs>();
   const handleSendTransaction: SubmitHandler<Inputs> = useCallback(
     async (data) => {

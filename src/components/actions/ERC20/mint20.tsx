@@ -10,7 +10,7 @@ import { useOpenExplorer } from "@/hooks/useOpenExplorer";
 export default function Mint20({ to }: { to?: Address | null }) {
   const [value, setValue] = useState("1");
   const { address, chainId } = useAccount();
-  const { sendTransaction, isPending, isSuccess, data } = useSendTransaction();
+  const { sendTransaction, isPending, data } = useSendTransaction();
   const openExplorer = useOpenExplorer();
   const handleMint = useCallback(() => {
     if (!to) return;
