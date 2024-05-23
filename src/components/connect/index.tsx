@@ -11,7 +11,6 @@ const ConnectWalletAction = () => {
   const handleConnect = () => {
     open();
   };
-  console.log(chainId);
   return (
     <div className="flex justify-center">
       {isConnected ? (

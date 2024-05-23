@@ -11,6 +11,9 @@ import SendCFX from "./components/actions/sendCFX";
 import { Toaster } from "@/components/ui/toaster";
 import PersonalSign from "./components/actions/PersonalSign";
 import SignTypedDataV4 from "./components/actions/SignTypedDataV4";
+import ERC1155 from "./components/actions/ERC1155";
+import ERC721 from "./components/actions/ERC721";
+import ERC20 from "./components/actions/ERC20";
 
 const queryClient = new QueryClient();
 
@@ -22,7 +25,6 @@ const metadata = {
   url: "https://vercel.app", // origin must match your domain & subdomain
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
 };
-
 const config = createConfig({
   chains: [confluxESpaceTestnet],
   transports: {
@@ -60,6 +62,16 @@ export default function App() {
 
           <div className="w-1/2">
             <SignTypedDataV4 />
+          </div>
+
+          <div className="w-1/2">
+            <ERC1155 />
+          </div>
+          <div className="w-1/2">
+            <ERC721 />
+          </div>
+          <div className="w-1/2">
+            <ERC20 />
           </div>
         </div>
         <Toaster />

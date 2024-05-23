@@ -1,4 +1,4 @@
-import { useAccount, useSignTypedData, useVerifyTypedData } from "wagmi";
+import { useAccount, useClient, useSignTypedData, useVerifyTypedData } from "wagmi";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { useCallback, useMemo, useState } from "react";
@@ -89,9 +89,6 @@ const SignTypedDataV4 = () => {
   } = useSignTypedData({});
   const { chainId, address } = useAccount();
 
-  const [verifying, setVerifying] = useState(false);
-  const [isVerified, setIsVerified] = useState<boolean | null>(null);
-
   const data = useMemo(() => {
     return chainId ? typedData(chainId) : null;
   }, [chainId]);
@@ -105,21 +102,6 @@ const SignTypedDataV4 = () => {
     }
   }, [signTypedData, data]);
 
-  const verify = useCallback(async () => {
-    if (address && data && hash) {
-      setVerifying(true);
-      const res = await verifyTypedData({
-        address,
-        types: data.types,
-        primaryType: data.primaryType,
-        message: data.message,
-        signature: hash,
-      });
-      console.log(res);
-      setIsVerified(res);
-      setVerifying(false);
-    }
-  }, [address, data, hash]);
 
   return (
     <Card>
@@ -127,7 +109,7 @@ const SignTypedDataV4 = () => {
         <CardTitle>SignTypedDataV4</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-3">
-        <Button disabled={isPending} onClick={sign}>
+        <Button disabled={isPending} loading={isPending} onClick={sign}>
           SIGN TYPED DATA
         </Button>
 

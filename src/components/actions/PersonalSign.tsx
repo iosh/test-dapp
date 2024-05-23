@@ -79,7 +79,7 @@ const PersonalSign = () => {
               {...register("message", { required: true })}
             />
           </Label>
-          <Button disabled={isPending} type="submit" className="w-full">
+          <Button disabled={isPending} loading={isPending} type="submit" className="w-full">
             SIGN MESSAGE
           </Button>
         </form>
