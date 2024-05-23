@@ -63,7 +63,6 @@ export default function ERC721() {
           <Label>
             <span>Name</span>
             <Input
-              type="text"
               {...register("name", { required: true })}
               defaultValue={"test"}
             />
@@ -72,7 +71,6 @@ export default function ERC721() {
           <Label>
             <span>Symbol</span>
             <Input
-              type="text"
               {...register("symbol", { required: true })}
               defaultValue={"test"}
             />

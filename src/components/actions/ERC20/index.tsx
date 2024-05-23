@@ -62,14 +62,14 @@ export default function ERC20() {
             <span>Name</span>
             <Input
               {...register("name", { required: true })}
-              defaultValue={"text"}
+              defaultValue={"test"}
             />
           </Label>
           <Label>
             <span>Symbol</span>
             <Input
               {...register("symbol", { required: true })}
-              defaultValue={"text"}
+              defaultValue={"test"}
             />
           </Label>
           <Button
