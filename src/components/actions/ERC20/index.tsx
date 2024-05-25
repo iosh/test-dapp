@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Mint20 from "./mint20";
 import Transfer20 from "./transfer20";
+import Approve20 from "./approve20";
 
 interface Inputs {
   name: string;
@@ -84,6 +85,7 @@ export default function ERC20() {
           <div className="flex  flex-col gap-5">
             <Mint20 to={receipt.contractAddress} />
             <Transfer20 to={receipt.contractAddress} />
+            <Approve20 to={receipt.contractAddress}/>
           </div>
         )}
       </CardContent>
