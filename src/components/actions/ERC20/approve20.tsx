@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useCallback } from "react";
-import { Address, encodeFunctionData, parseUnits } from "viem";
+import { Address, encodeFunctionData } from "viem";
 import { useAccount, useSendTransaction } from "wagmi";
 import { useForm, SubmitHandler } from "react-hook-form";
 type Inputs = {
