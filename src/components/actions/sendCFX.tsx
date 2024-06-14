@@ -12,7 +12,18 @@ import { useOpenExplorer } from "@/hooks/useOpenExplorer";
 type Inputs = {
   address: string;
   amount: string;
+  gasPrice?: string;
+  gasLimit?: string;
+  maxFeePerGas?: string;
+  maxPriorityFeePerGas?: string;
+  type?: "0" | "1" | "2";
 };
+
+const mapType = {
+  "0": "legacy",
+  "1": "eip2930",
+  "2": "eip1559",
+} as const;
 
 const SendCFX = () => {
   const { address } = useAccount();
@@ -21,16 +32,28 @@ const SendCFX = () => {
   const { toast } = useToast();
 
   const openExplorer = useOpenExplorer();
-  const {
-    register,
-    handleSubmit,
-  } = useForm<Inputs>();
+  const { register, handleSubmit } = useForm<Inputs>();
   const handleSendTransaction: SubmitHandler<Inputs> = useCallback(
-    async (data) => {
-      if (isAddress(data.address)) {
+    async ({
+      address,
+      amount,
+      type,
+      gasPrice,
+      gasLimit,
+      maxFeePerGas,
+      maxPriorityFeePerGas,
+    }) => {
+      if (isAddress(address)) {
         sendTransaction({
-          to: data.address,
-          value: parseEther(data.amount),
+          to: address,
+          value: parseEther(amount),
+          type: type ? mapType[type] : undefined,
+          gasPrice: gasPrice ? BigInt(gasPrice) : undefined,
+          gas: gasLimit ? BigInt(gasLimit) : undefined,
+          maxFeePerGas: maxFeePerGas ? BigInt(maxFeePerGas) : undefined,
+          maxPriorityFeePerGas: maxPriorityFeePerGas
+            ? BigInt(maxPriorityFeePerGas)
+            : undefined,
         });
       } else {
         toast({ title: "error", description: '"invalid address"' });
@@ -53,6 +76,26 @@ const SendCFX = () => {
           className=" flex flex-col gap-5"
           onSubmit={handleSubmit(handleSendTransaction)}
         >
+          <Label>
+            Type 0 1 2 (optional)
+            <Input {...register("type")} />
+          </Label>
+          <Label>
+            GasPrice (optional)
+            <Input {...register("gasPrice")} />
+          </Label>
+          <Label>
+            gasLimit (optional)
+            <Input {...register("gasLimit")} />
+          </Label>
+          <Label>
+            maxFeePerGas (optional)
+            <Input {...register("maxFeePerGas")} />
+          </Label>
+          <Label>
+            maxPriorityFeePerGas (optional)
+            <Input {...register("maxPriorityFeePerGas")} />
+          </Label>
           <Label>
             Address
             <Input

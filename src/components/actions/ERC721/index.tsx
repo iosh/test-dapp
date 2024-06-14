@@ -24,6 +24,7 @@ export default function ERC721() {
     sendTransaction,
     isSuccess,
     isPending,
+    error
   } = useSendTransaction();
 
   const {
@@ -48,7 +49,7 @@ export default function ERC721() {
   );
   const isDeployPending =
     isPending || isSuccess ? isReceiptPending || !isReceiptSuccess : false;
-
+  console.log(error)
   return (
     <Card>
       <CardHeader>
